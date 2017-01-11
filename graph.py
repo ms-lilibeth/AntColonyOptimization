@@ -6,8 +6,8 @@ from collections import defaultdict
 class Graph:
     def __init__(self, filename):
         self._container = defaultdict(lambda : None)
-        self._destination = None
-        self._start == 1
+        self.destination = None
+        self.start == 1
         self.nodes_num = 0
         self._create_from_file(filename)
 
@@ -26,8 +26,8 @@ class Graph:
             line = f.readline()
             vals = [int(s) for s in line.split() if s.isdigit()]
             self.nodes_num = vals[0]
-            self._start = vals[1]
-            self._destination = vals[2]
+            self.start = vals[1]
+            self.destination = vals[2]
 
             # Reading list of edges
             for line in f:
