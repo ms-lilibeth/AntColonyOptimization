@@ -2,7 +2,7 @@ import random
 
 
 class Ant:
-    def __init__(self, graph, current_node, destination):
+    def __init__(self, graph, current_node, destination, rand_seed=None):
         self._curr_node = current_node
         self._path_len = 0
         self._graph = graph
@@ -11,6 +11,7 @@ class Ant:
         self._path = [current_node]
         self._destination = destination
         self._dead_end = False
+        random.seed(rand_seed)
 
     def move(self):
         if self.is_stopped():
@@ -21,21 +22,21 @@ class Ant:
             self._dead_end = True
             print("Warning: dead end! Ant stopped.")
 
-        probabilities = {}
+        probabilities = {}  # key - node_to, value - probability
         denominator = self._graph.get_denominator(self.pheromone_influence)
         for n in adj_nodes:
             ph = self._graph.get_pheromone(self._curr_node, n)
             probabilities[n] = (ph**self.pheromone_influence * (1/adj_nodes[n])**(1-self.pheromone_influence))\
                 / denominator
-        random.seed()
+
         interval_len = sum(probabilities.values())
         r = random.uniform(0, interval_len)
         tmp_sum = 0
 
-        for i in range(len(probabilities)):
-            tmp_sum += probabilities[i]
+        for node in probabilities:
+            tmp_sum += probabilities[node]
             if tmp_sum > r:
-                move_to = i
+                move_to = node
                 break
         self._path_len += self._graph.get_weight(self._curr_node, move_to)
         # self._graph.update_pheromone(self._curr_node, move_to, self._path_len)

@@ -11,7 +11,7 @@ class AntColony:
     def find_best_path(self, iters_num):
         paths = {}  # key - path length, value - list of paths of this length
         for iteration in range(iters_num):
-            ants = [Ant(self._graph, self._start) for i in range(self._size)]
+            ants = [Ant(self._graph, self._start, self._destination, i+iteration) for i in range(self._size)]
             moving_ants = [a for a in ants]
             while len(moving_ants) != 0:
                 for ant in moving_ants:

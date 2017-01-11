@@ -1,11 +1,14 @@
 from graph import Graph
 from AntColony import AntColony
 
+colony_size = 25
+iters_num = 10
+
 g = Graph("graph18_1.txt")
-colony = AntColony(20, g, g.destination)
-result = colony.find_best_path(5)
+colony = AntColony(colony_size, g, g.destination)
+result = colony.find_best_path(iters_num)
 with open("output.txt", 'w') as f:
-    f.write("Min path length: " + str(result[0] + "\n"))
+    f.write("Min path length: " + str(result[0]) + "\n")
     f.write("Possible paths (node - (weight) - node: \n")
     for path in result[1]:
         for i in range(len(path)-1):
@@ -17,6 +20,8 @@ with open("output.txt", 'w') as f:
     n = g.get_node_list()
     for i in n:
         for j in n:
-            f.write(str(i) + ', ' + str(j) + ': ' + str(g.get_weight(i, j)))
+            w = g.get_weight(i, j)
+            if w is not None:
+                f.write(str(i) + ', ' + str(j) + ': ' + str(w) + '\n')
 
 
