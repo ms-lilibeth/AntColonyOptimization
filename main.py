@@ -8,7 +8,7 @@ with open("output.txt", 'w') as f:
     f.write("Min path length: " + str(result[0] + "\n"))
     f.write("Possible paths (node - (weight) - node: \n")
     for path in result[1]:
-        for i in range(len(path))-1:
+        for i in range(len(path)-1):
             f.write(str(path[i]) + " - (" + str(g.get_weight(path[i], path[i+1])) +
                     ") - ")
         f.write(str(path[-1]) + "\n")
